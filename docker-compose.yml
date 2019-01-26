@@ -1,0 +1,62 @@
+version: '3'
+services:
+   mosquitto:
+      container_name: mosquitto
+      image: "eclipse-mosquitto"
+      extra_hosts:
+        - "influxdm:192.168.1.22"
+        - "grafana:192.168.1.21"
+        - "mqtt:192.168.1.14"
+      ports:
+        - "11883:1883"
+      volumes:
+        - mqtt_config:/mosquitto/config
+        - mqtt_log:/mosquitto/log
+        - mqtt_data:/mosquitto/data
+
+    #grafana:
+      #container_name: grafana
+      #image: "grafana/grafana"
+      #extra_hosts:
+      #  - "influxdm:192.168.1.22"
+      #  - "grafana:192.168.1.21"
+      #  - "mqtt:192.168.1.14"
+      #volumes:
+      #  - grafana_config:/etc/grafana
+      #  - grafana_data:/var/lib/grafana
+      #  - grafana_logs:/var/log/grafana
+      #  - grafana_plugins:/var/lib/grafana/plugins
+      #  - grafana_provisioning:/etc/grafana/provisioning
+
+
+      #influxdb:
+      #container_name: influxdb
+      #image: "influxdb"
+      #extra_hosts:
+      #  - "influxdm:192.168.1.22"
+      #  - "grafana:192.168.1.21"
+      #  - "mqtt:193.168.1.14"
+      #volumes:
+      #  - influxdb_db:/var/lib/influxdb
+      #  - influxdb_config:/etc/influxdb
+
+volumes:
+  mqtt_config: 
+  mqtt_data:
+  mqtt_log:
+
+  influxdb_db:
+  influxdb_config:
+
+  grafana_config:
+  grafana_data:
+  grafana_logs:
+  grafana_plugins:
+  grafana_provisioning:
+
+networks:
+  # the frontent network is an external network allowing connection to external world 
+  frontent:
+          external: yes
+
+
